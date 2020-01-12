@@ -2,6 +2,7 @@ import requests
 import csv
 import json
 import time
+
 #字典嵌套处理
 def get_target_value(key, dic, tmp_list):
     """
@@ -22,6 +23,7 @@ def get_target_value(key, dic, tmp_list):
             elif isinstance(value, (list, tuple)):
                 _get_value(key, value, tmp_list)  # 传入数据的value值是列表或者元组，则调用_get_value
     return tmp_list
+
 def _get_value(key, val, tmp_list):
 
     for val_ in val:
@@ -29,6 +31,7 @@ def _get_value(key, val, tmp_list):
             get_target_value(key, val_, tmp_list)  # 传入数据的value值是字典，则调用get_target_value
         elif isinstance(val_, (list, tuple)):
             _get_value(key, val_, tmp_list)   # 传入数据的value值是列表或者元组，则调用自身
+
 #数据处理
 def data_process(chat_id,r_name,r):
     jsons = json.dumps(r)
@@ -43,12 +46,14 @@ def data_process(chat_id,r_name,r):
     
     final_result = [chat_id,result_name,result]
     return final_result
+
 #数据写入
 def csv_write(final_result):
     csvFile = open("data_output.csv", "a")
     writer = csv.writer(csvFile)
     writer.writerow(final_result)
     csvFile.close()
+
 #主程序
 chat_list = ["Sample_1","Sample_2"]
 localtime = [time.asctime( time.localtime(time.time()) )]
